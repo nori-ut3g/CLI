@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CLI</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- fontawesome -->
+    <link href="https://use.fontawesome.com/releases/v5.13.0/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="bg-success vh-100 d-flex flex-column justify-content-center">
+    <div class="container col-8 px-0 bg-result">
+        <div class="text-center bg-header py-2">
+            <h1>FileSystem</h1>
+            <!--            <h6>入力フォーマット: <br> "FTools showAvailableLocales"-->
+            <!--                <br>"FTools showDenominations [locale]"-->
+            <!--                <br>"FTools convert [sourceDenomination] [sourceAmount] [destinationLocale]"</h6>-->
+        </div>
+
+        <div id="CLIOutputDiv" class="container vh-60 bg-dark p-3 text-white">
+        </div>
+
+
+        <div class="container input-group py-2">
+            <span id="path-info" class="m-auto"></span>
+            <input type="text" id ="CLITextInput" class="form-control bg-dark text-white border-zero" placeholder="type any command" aria-label="Username" aria-describedby="addon-wrapping">
+        </div>
+    </div>
+</div>
+<script  src="main.js"></script>
+</body>

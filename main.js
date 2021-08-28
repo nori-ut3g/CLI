@@ -1067,9 +1067,7 @@ class FileSystemConsole{
             fileSystem.copy(targetDirPath, destinationDirPath)
         }
         if (command === "passwd"){
-
-            let user = fileSystem.isRootUser() ? fileSystem.getUser(args[0]): fileSystem.getCurrentUser();
-            //let user = fileSystem.getUser(args[0]);
+            let user = (fileSystem.isRootUser() && args[0] === null) ? fileSystem.getUser(args[0]): fileSystem.getCurrentUser();
 
             if(history.isInProcess["isInProcess"] === false){
                 //1.パスワード未設定の場合

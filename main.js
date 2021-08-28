@@ -1,54 +1,3 @@
-/*
-directoryの管理はFileSystemクラスで行っている。
-directoryの構造は、DirクラスにSubDirMapを設置した。
-CurrentDirectoryはルートディレクトリからの絶対パスを配列で保持するようにした。
-ログイン中のユーザーはFileSystemクラスで保持する。
-
-
-
-class User
-    ユーザー情報
-class RootUser extends User
-    ルートユーザー
-
-class Dir
-    directory情報
-    directoryの操作
-
-class Text
-    textの操作（DirをExtendsするか、インターフェースを作ればよかった、、、）
-
-class FileSystem
-    ファイルシステム管理用
-    directoryの構造を保持し、ユーザーなどの管理も行う
-
-class FileSystemConsole
-    ファイルシステム操作用
-    全てStatic
-
-class Help
-    コマンドのヘルプ表示用
-
-class CommandLineHistory
-    コマンドラインの入力履歴
-    コマンド入力状態の保持（コマンド実行中か、コマンド実行終了かなど）
-
-function historyUp
-function historyDown
-    コマンドラインの履歴操作用
-
-function doCommand
-    コマンドを実行する
-function continueCommand
-    コマンドを継続する
-    例えば、パスワード設定の時にコマンド実行中にパスワード入力を行いたい時などに使用する。
-    CommandLineHistoryクラスが保持している、コマンド実行中or終了の変数によってdoCommandと使い分ける。
-
-function submitSearch
-    キーの実行
-
- */
-
 class User{
     constructor(name) {
         this.name = name;
@@ -177,8 +126,6 @@ class Dir{
         this.subDirs[dirName] = new Dir(dirName, owner);
     }
     hasDir(name){
-        console.log(name)
-        console.log(this.subDirs)
         return name in this.subDirs;
     }
 }
@@ -315,8 +262,6 @@ class FileSystem{
 
     /*-------------command----------------*/
     touchFile(dirPath, newFileName, fileExtension){
-        // let newFileName = dirPath.pop();
-        console.log(dirPath)
         let tmpArray = this.convertRelativePathToAbsolutePath(dirPath)["dirPath"];
 
         let targetDir = tmpArray[tmpArray.length-1];
@@ -384,10 +329,6 @@ class FileSystem{
         this.currentUser = this.users[userName];
         this.path = this.shortCutDirPath(userName);
     }
-    // createNewFile(fileName){
-    //     let currentDir = this.path[this.path.length-1];
-    //     currentDir.createNewFile(fileName, this.currentUser.getUserName());
-    // }
 
     //dirPathはString型のDirNameのPath
     createNewDir(dirNameAry){
@@ -483,7 +424,6 @@ class FileSystem{
         let targetDir = targetAbsolutePath["dirPath"][targetAbsolutePath["dirPath"].length-1];
         let targetDirParent = targetAbsolutePath["dirPath"][targetAbsolutePath["dirPath"].length-2];
         let destinationDir = destinationAbsolutePath["dirPath"][destinationAbsolutePath["dirPath"].length-1];
-        console.log(targetDir,targetDirParent,destinationDir)
 
 
         if(targetAbsolutePath["isAllSubDir"]){
@@ -886,23 +826,21 @@ class FileSystemConsole{
                 return {"isValid": false, "errorMessage": `${args[0]} directory is already in home directory`};
             }
         }
+        if(command === "passwd"){
+            if (!fileSystem.userExists(args[0])) {
+                return {"isValid": false, "errorMessage": `${args[0]} dose not exist`};
+            }
+        }
         if(command === "login"){
             if (!fileSystem.userExists(args[0])) {
                 return {"isValid": false, "errorMessage": `${args[0]} dose not exist`};
             }
-            // if (!fileSystem.isAvailablePath(FileSystemConsole.pathParser("/home"))){
-            //     return {"isValid": false, "errorMessage": `Not found home directory`};
-            // }
-            // if (!fileSystem.isAvailablePath(FileSystemConsole.pathParser(`/home/${args[0]}`))){
-            //     return {"isValid": false, "errorMessage": `Not found ${args[0]} directory`};
-            // }
+
         }
         if(command === "help" && !Help.isAvailableCommand(args[0])){
             return {"isValid": false, "errorMessage": `${args[0]} is not supported. Type "help".`};
         }
-        // if(command === "passwd" && !fileSystem.userExists(args[0])){
-        //     return {"isValid": false, "errorMessage": `${args[0]} dose not exist`};
-        // }
+
         return {"isValid": true, "errorMessage": ""};
     }
 
@@ -954,25 +892,6 @@ class FileSystemConsole{
         return {"isValid": true, "errorMessage": ""};
     }
 
-    // static dirPermissionValidator(command, commandOption, args){
-    //     if(command === "cd" && fileSystem.dirPermission(FileSystemConsole.pathParser(args[0]), "x")){
-    //
-    //         return {"isValid": false, "errorMessage": `permission denied`};
-    //     }
-    //     if(command === "touch" && fileSystem.dirPermission(FileSystemConsole.pathParser(args[0]), "x")){
-    //         return {"isValid": false, "errorMessage": `permission denied`};
-    //     }
-    //     if(command === "mv" && fileSystem.dirPermission(FileSystemConsole.pathParser(args[0]), "w")){
-    //         return {"isValid": false, "errorMessage": `permission denied`};
-    //     }
-    //     if(command === "ls" && !fileSystem.dirPermission(FileSystemConsole.pathParser(args[0]), "r")){
-    //         return {"isValid": false, "errorMessage": `permission denied`};
-    //     }
-    //     if(command === "touch" && !fileSystem.dirPermission(FileSystemConsole.pathParser(args[0]), "r")){
-    //         return {"isValid": false, "errorMessage": `permission denied`};
-    //     }
-    //     return {"isValid": true, "errorMessage": ""};
-    // }
 
     /*--------------echo----------------*/
     static appendEchoParagraph(parentDiv){
@@ -1088,7 +1007,6 @@ class FileSystemConsole{
         }
         if (command === "login"){
             let user = fileSystem.getUser(args[0]);
-            console.log(user.getUserPassHash())
             if(user.getUserPassHash() === null){
                 fileSystem.login(args[0]);
             }else{
@@ -1174,7 +1092,6 @@ class FileSystemConsole{
                     }
                     //二回目の確認
                     else{
-                        console.log("te",history.getInputData())
                         if(history.getInputData()[1] === inputData){
                             user.setPassWordHash(inputData);
                             result = `done`

@@ -890,19 +890,19 @@ class FileSystemConsole{
             if (!fileSystem.userExists(args[0])) {
                 return {"isValid": false, "errorMessage": `${args[0]} dose not exist`};
             }
-            if (!fileSystem.isAvailablePath(FileSystemConsole.pathParser("/home"))){
-                return {"isValid": false, "errorMessage": `Not found home directory`};
-            }
-            if (!fileSystem.isAvailablePath(FileSystemConsole.pathParser(`/home/${args[0]}`))){
-                return {"isValid": false, "errorMessage": `Not found ${args[0]} directory`};
-            }
+            // if (!fileSystem.isAvailablePath(FileSystemConsole.pathParser("/home"))){
+            //     return {"isValid": false, "errorMessage": `Not found home directory`};
+            // }
+            // if (!fileSystem.isAvailablePath(FileSystemConsole.pathParser(`/home/${args[0]}`))){
+            //     return {"isValid": false, "errorMessage": `Not found ${args[0]} directory`};
+            // }
         }
         if(command === "help" && !Help.isAvailableCommand(args[0])){
             return {"isValid": false, "errorMessage": `${args[0]} is not supported. Type "help".`};
         }
-        if(command === "passwd" && !!fileSystem.userExists(args[0])){
-            return {"isValid": false, "errorMessage": `${args[0]} dose not exist`};
-        }
+        // if(command === "passwd" && !fileSystem.userExists(args[0])){
+        //     return {"isValid": false, "errorMessage": `${args[0]} dose not exist`};
+        // }
         return {"isValid": true, "errorMessage": ""};
     }
 
@@ -1079,13 +1079,16 @@ class FileSystemConsole{
             result = "/" + fileSystem.printWorkingDirectory().join("/");
         }
         if (command === "adduser"){
-            fileSystem.createNewUser(args[0]);
+            if(fileSystem.isRootUser())fileSystem.createNewUser(args[0]);
+            else result = "This command is root only. "
+
         }
-        // if (command === "logout"){
-        //     fileSystem.login("root")
-        // }
+        if (command === "logout"){
+            fileSystem.login("root")
+        }
         if (command === "login"){
             let user = fileSystem.getUser(args[0]);
+            console.log(user.getUserPassHash())
             if(user.getUserPassHash() === null){
                 fileSystem.login(args[0]);
             }else{
@@ -1146,7 +1149,10 @@ class FileSystemConsole{
             fileSystem.copy(targetDirPath, destinationDirPath)
         }
         if (command === "passwd"){
-            let user = fileSystem.getCurrentUser();
+
+            let user = fileSystem.isRootUser() ? fileSystem.getUser(args[0]): fileSystem.getCurrentUser();
+            //let user = fileSystem.getUser(args[0]);
+
             if(history.isInProcess["isInProcess"] === false){
                 //1.パスワード未設定の場合
                 if(user.getUserPassHash() === null){

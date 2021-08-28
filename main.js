@@ -728,7 +728,9 @@ class FileSystemConsole{
         let commandArgNum = {"ls":[0,1], "pwd":[0], "touch":[1], "tree":[0,1],"mkdir":[1], "cd":[1], "print":[1],
             "setContent":[1], "rm":[1], "adduser":[1], "login":[1], "mv":[2], "cp":[2], "help":[0,1], "passwd":[0,1],
             "logout":[0],"chmod":[2],"chown":[2]};
-
+        if(command ===  ""){
+            return {"isValid": false, "errorMessage": "Type command"};
+        }
         if (!(command in commandArgNum)){
             return {"isValid": false, "errorMessage": "no supports command"};
         }

@@ -262,15 +262,14 @@ class FileSystem{
 
     /*-------------command----------------*/
     touchFile(dirPath, newFileName, fileExtension){
-        let tmpArray = this.convertRelativePathToAbsolutePath(dirPath)["dirPath"];
-
-        let targetDir = tmpArray[tmpArray.length-1];
-        if(targetDir.getSubDir(newFileName)){
-            targetDir.createNewFile(newFileName, this.currentUser, fileExtension);
+        let targetDir;
+        if(dirPath.length !== 0){
+            let tmpArray = this.convertRelativePathToAbsolutePath(dirPath)["dirPath"];
+            targetDir = tmpArray[tmpArray.length-1];
         }else{
-            targetDir.createNewFile(newFileName, this.currentUser, fileExtension);
+            targetDir = this.path[this.path.length-1];
         }
-
+        targetDir.createNewFile(newFileName, this.currentUser, fileExtension);
     }
     changeDirPermission(dirPath, numString){
         let tmpArray = this.convertRelativePathToAbsolutePath(dirPath)["dirPath"];
@@ -333,7 +332,7 @@ class FileSystem{
     //dirPathはString型のDirNameのPath
     createNewDir(dirNameAry){
         let path = this.path.concat();
-        let dirItr = this.path.concat;
+        let dirItr = this.path.concat();
         switch (dirNameAry[0]) {
             case ".":
                 dirItr = path[path.length-1];
@@ -964,6 +963,8 @@ class FileSystemConsole{
         if (command === "touch"){
             let pathArray = FileSystemConsole.pathParser(args[0]);
             let newFileName = pathArray.pop();
+            console.log(pathArray)
+            console.log(newFileName)
             //隠しファイルかどうか
             if(newFileName[0] === "."){
                 let newFileNameArray = newFileName.split(".");

@@ -5,9 +5,9 @@ https://nori-ut3g.github.io/CLI/
 
 ## 概要
 疑似的なコマンドラインです。Recursionの課題の一環で下記コマンドを実装しました。コードはオリジナルです。
-
 ![](img/demo_1.png)
 
+下記コマンドを実装しました。
 ```angular2html
 ls [|filepath] [-option]
 pwd []
@@ -30,13 +30,9 @@ passwd [|username]
 chmod [permissionSetting] [filepath]
 chown [username|:group|username:group] [filepath]
 ```
-Filepathは絶対パス、相対パスに対応し、~でログイン中のアカウントのHomeディレクトリを指定できます。
 
-アカウントにパスワードを設定することもでき、パスワードはハッシュ値で保存しました。
 
-ファイル、ディレクトリにPermissionが指定できるようにし、ほかのアカウントからのアクセスを制限することもできます。
-
-### 各コマンドの特徴
+## 各コマンドの特徴
 - ls
 
     カレントディレクトリ内にあるフォルダやファイルの一覧を表示します。-lや-aのようなオプションも実装しました。

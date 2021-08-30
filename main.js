@@ -44,7 +44,7 @@ class Dir{
         this.modifiedTime = this.createdTime;
         this.type = "dir"
         this.owner = owner;
-        this.groupName = "root";//this.owner.getUserGroup();
+        this.groupName = this.owner.getUserGroup();
         this.permission = ["d", "rwx", "rwx", "---"];
     }
     /*--------------set----------------*/
@@ -258,6 +258,9 @@ class FileSystem{
     userExists(name){
         if(this.users[name]) return true;
         else return false;
+    }
+    groupExists(groupName){
+        return Object.values(this.users).filter(user => user.getUserGroup() === groupName).length > 0;
     }
 
     /*-------------command----------------*/
@@ -874,14 +877,22 @@ class FileSystemConsole{
             }
         }
         if(command === "chown"){
-            let userName
+            let userName = "";
+            let groupName = "";
             if(args[0].includes(":")){
                 userName = FileSystemConsole.pathParser(args[0])[0].split(":")[0];
+                groupName = FileSystemConsole.pathParser(args[0])[0].split(":")[1];
             }else{
                 userName = FileSystemConsole.pathParser(args[0])[0];
             }
-            if(!fileSystem.userExists(userName)){
+            if(userName !== "" && !fileSystem.userExists(userName)){
                 return {"isValid": false, "errorMessage": `${userName} dose not exist`};
+            }
+            if(groupName !== "" && !fileSystem.groupExists(groupName)){
+                return {"isValid": false, "errorMessage": `${groupName} dose not exist`};
+            }
+            if(userName === "" && groupName === "") {
+                return {"isValid": false, "errorMessage": `The username has not been specified.`};
             }
             if(!fileSystem.isAvailablePath(FileSystemConsole.pathParser(args[1]))){
                 return {"isValid": false, "errorMessage": `No such file or directory`};

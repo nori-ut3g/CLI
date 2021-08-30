@@ -898,10 +898,10 @@ class FileSystemConsole{
     static appendEchoParagraph(parentDiv){
         parentDiv.innerHTML+=
             `<p class="m-0">
-                <span style='color:green'>${fileSystem.getCurrentUser().getUserName()}</span>
-                <span style='color:magenta'>@</span>
-                <span style='color:blue'>${fileSystem.getCurrentUser().getUserGroup() + ":"}</span>
-                <span style='color:blue'>${"/" + fileSystem.printWorkingDirectory().join("/") + "$"}</span>
+                <span style='color:lawngreen'>${fileSystem.getCurrentUser().getUserName()}</span>
+                <span style='color:yellow'>@</span>
+                <span style='color:lightskyblue'>${fileSystem.getCurrentUser().getUserGroup() + ":"}</span>
+                <span style='color:lightskyblue'>${"/" + fileSystem.printWorkingDirectory().join("/") + "$"}</span>
                 : ${CLITextInput.value}
             </p>`;
     }
@@ -1428,10 +1428,10 @@ function doCommand(){
 
     PathInfoSpan.innerHTML =
         `<p class="m-0">
-                <span style='color:green'>${fileSystem.getCurrentUser().getUserName()}</span>
-                <span style='color:magenta'>@</span>
-                <span style='color:blue'>${fileSystem.getCurrentUser().getUserGroup() + ":"}</span>
-                <span style='color:blue'>${"/" + fileSystem.printWorkingDirectory().join("/") + "$"}</span>
+                <span style='color:lawngreen'>${fileSystem.getCurrentUser().getUserName()}</span>
+                <span style='color:yellow'>@</span>
+                <span style='color:lightskyblue'>${fileSystem.getCurrentUser().getUserGroup() + ":"}</span>
+                <span style='color:lightskyblue'>${"/" + fileSystem.printWorkingDirectory().join("/") + "$"}</span>
                 : ${CLITextInput.value}
             </p>`;
     CLITextInput.focus();
@@ -1453,10 +1453,10 @@ function continueCommand(){
 
     PathInfoSpan.innerHTML =
         `<p class="m-0">
-                <span style='color:green'>${fileSystem.getCurrentUser().getUserName()}</span>
-                <span style='color:magenta'>@</span>
-                <span style='color:blue'>${fileSystem.getCurrentUser().getUserGroup() + ":"}</span>
-                <span style='color:blue'>${"/" + fileSystem.printWorkingDirectory().join("/") + "$"}</span>
+                <span style='color:lawngreen'>${fileSystem.getCurrentUser().getUserName()}</span>
+                <span style='color:yellow'>@</span>
+                <span style='color:lightskyblue'>${fileSystem.getCurrentUser().getUserGroup() + ":"}</span>
+                <span style='color:lightskyblue'>${"/" + fileSystem.printWorkingDirectory().join("/") + "$"}</span>
                 : ${CLITextInput.value}
             </p>`;
     CLITextInput.focus();
@@ -1498,10 +1498,10 @@ let CLIOutputDiv = document.getElementById("CLIOutputDiv");
 let PathInfoSpan = document.getElementById("path-info");
 PathInfoSpan.innerHTML =
     `<p class="m-0">
-                <span style='color:green'>${fileSystem.getCurrentUser().getUserName()}</span>
-                <span style='color:magenta'>@</span>
-                <span style='color:blue'>${fileSystem.getCurrentUser().getUserGroup() + ":"}</span>
-                <span style='color:blue'>${"/" + fileSystem.printWorkingDirectory().join("/") + "$"}</span>
+                <span style='color:lawngreen'>${fileSystem.getCurrentUser().getUserName()}</span>
+                <span style='color:yellow'>@</span>
+                <span style='color:lightskyblue'>${fileSystem.getCurrentUser().getUserGroup() + ":"}</span>
+                <span style='color:lightskyblue'>${"/" + fileSystem.printWorkingDirectory().join("/") + "$"}</span>
                 : ${CLITextInput.value}
             </p>`;
 
